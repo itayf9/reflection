@@ -104,14 +104,14 @@ public class InvestigateReflect implements Investigator {
     public boolean isParentClassAbstract() {
         Class extendedClass= clazz.getSuperclass();
         int modifier;
-        boolean isParentAbstract= false;
+        boolean isParentAbstract = false;
 
         if (extendedClass != null)
         {
             modifier= extendedClass.getModifiers();
             if (Modifier.isAbstract(modifier))
             {
-                isParentAbstract= true;
+                isParentAbstract = true;
             }
         }
 
