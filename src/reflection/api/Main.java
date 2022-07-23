@@ -15,5 +15,8 @@ public class Main {
         System.out.println(a.isExtending());
         System.out.println(a.getParentClassSimpleName());
         System.out.println(a.isParentClassAbstract());
+        // getNamesOfAllFieldsIncludingInheritanceChain()
+        // invokeMethodThatReturnsInt()
+        Object b = a.createInstance(3, "a", "b", "c");
     }
 }

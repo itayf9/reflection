@@ -5,6 +5,7 @@ import java.lang.reflect.Method;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
+import java.lang.reflect.InvocationTargetException;
 
 public class InvestigateReflect implements Investigator {
 
@@ -120,17 +121,52 @@ public class InvestigateReflect implements Investigator {
 
     @Override
     public Set<String> getNamesOfAllFieldsIncludingInheritanceChain() {
+
         return null;
     }
 
     @Override
     public int invokeMethodThatReturnsInt(String methodName, Object... args) {
+       Method[] methods= clazz.getDeclaredMethods();
+        Method methodThatReturnsInt= null;
+        int i = 0;
+
+        while (i< methods.length)
+        {
+            if (methods[i].getReturnType().getName().equals("int"))
+            {
+                methodThatReturnsInt= methods[i];
+                break;
+            }
+            i++;
+        }
+
+
+
         return 0;
     }
 
     @Override
     public Object createInstance(int numberOfArgs, Object... args) {
-        return null;
+        Constructor[] constructors= clazz.getDeclaredConstructors();
+        Object newInstance= null;
+        try {
+            for (Constructor constructor : constructors) {
+                if (constructor.getParameterCount() == numberOfArgs) {
+                    newInstance = constructor.newInstance(args);
+                    break;
+                }
+            }
+        }catch (InstantiationException e) {
+        }
+        catch (IllegalAccessException e) {
+        }
+        catch (IllegalArgumentException e) {
+        }
+        catch (InvocationTargetException e){
+        }
+
+        return newInstance;
     }
 
     @Override
