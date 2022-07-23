@@ -15,7 +15,6 @@ public class InvestigateReflect implements Investigator {
     @Override
     public void load(Object anInstanceOfSomething) {
         this.clazz= anInstanceOfSomething.getClass();
-        System.out.println("class type is" + clazz.getName());
     }
 
     @Override
@@ -84,18 +83,39 @@ public class InvestigateReflect implements Investigator {
     @Override
     public boolean isExtending() {
         Class extendedClass= clazz.getSuperclass();
-        System.out.println(extendedClass.getName());
-        return extendedClass.getName().equals("java.lang.Object") ? false : true;
+
+        return extendedClass != null && !extendedClass.getName().equals("java.lang.Object");
     }
 
     @Override
     public String getParentClassSimpleName() {
-        return null;
+        Class extendedClass= clazz.getSuperclass();
+        String parentSimpleName= null;
+
+        if (extendedClass != null)
+        {
+            parentSimpleName= extendedClass.getSimpleName();
+        }
+
+        return parentSimpleName;
     }
 
     @Override
     public boolean isParentClassAbstract() {
-        return false;
+        Class extendedClass= clazz.getSuperclass();
+        int modifier;
+        boolean isParentAbstract= false;
+
+        if (extendedClass != null)
+        {
+            modifier= extendedClass.getModifiers();
+            if (Modifier.isAbstract(modifier))
+            {
+                isParentAbstract= true;
+            }
+        }
+
+        return isParentAbstract;
     }
 
     @Override

@@ -13,5 +13,7 @@ public class Main {
         System.out.println(a.getCountOfConstantFields());
         System.out.println(a.getCountOfStaticMethods());
         System.out.println(a.isExtending());
+        System.out.println(a.getParentClassSimpleName());
+        System.out.println(a.isParentClassAbstract());
     }
 }
