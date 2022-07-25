@@ -160,14 +160,12 @@ public class InvestigateReflect implements Investigator {
             Method[] methods= clazz.getDeclaredMethods(); // finds the method by its name
 
             for (Method method : methods) {
-                if (method.getGenericReturnType().getTypeName().equals("int")){
+                if (method.getName().equals(methodName) && method.getGenericReturnType().getTypeName().equals("int")){
                     res= (int)method.invoke(obj, args);
                     break;
                 }
-                else {
-                    throw new NoSuchMethodException();
-                }
             }
+            throw new NoSuchMethodException();
 
         }catch ( NoSuchMethodException e ) {
         }catch ( SecurityException e) {

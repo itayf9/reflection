@@ -5,7 +5,7 @@ public class Main {
     {
         InvestigateReflect a= new InvestigateReflect();
         String str= new String("test");
-        a.load(new B());
+        a.load(new Rectangle());
         System.out.println(a.getTotalNumberOfMethods());
         System.out.println(a.getTotalNumberOfConstructors());
         System.out.println(a.getTotalNumberOfFields());
@@ -16,7 +16,7 @@ public class Main {
         System.out.println(a.getParentClassSimpleName());
         System.out.println(a.isParentClassAbstract());
         System.out.println(a.getNamesOfAllFieldsIncludingInheritanceChain());
-        System.out.println("now: "+a.invokeMethodThatReturnsInt("foo", 2 ,3));
+        System.out.println("now: "+a.invokeMethodThatReturnsInt("calcArea"));
         Object b = a.createInstance(3, "a", "b", "c");
         Class<?>[] classes= new Class<?>[2];
         Integer x= 3;
