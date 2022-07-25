@@ -41,7 +41,13 @@ public class InvestigateReflect implements Investigator {
 
     @Override
     public Set<String> getAllImplementedInterfaces() {
-        return null;
+        Class<?>[] allImplementedInterfaces= clazz.getInterfaces();
+        Set<String> interfacesNames= null;
+
+        for (Class<?> implementedInterface : allImplementedInterfaces) {
+            interfacesNames.add(implementedInterface.getSimpleName());
+        }
+        return interfacesNames;
     }
 
     @Override
@@ -171,11 +177,41 @@ public class InvestigateReflect implements Investigator {
 
     @Override
     public Object elevateMethodAndInvoke(String name, Class<?>[] parametersTypes, Object... args) {
-        return null;
+        Method selectedMethod= null;
+
+        try {
+            selectedMethod= clazz.getDeclaredMethod(name, parametersTypes);
+        }catch (NoSuchMethodException e) {
+            return e;
+        }
+        catch (SecurityException e) {
+        }
+
+        Object res= null;
+
+        try {
+            res= selectedMethod.invoke(args);
+        }catch (IllegalAccessException e) {
+        }
+        catch (IllegalArgumentException e){
+        }
+        catch (InvocationTargetException e) {
+        }
+
+        return res;
     }
 
     @Override
     public String getInheritanceChain(String delimiter) {
-        return null;
+        String chain= clazz.getSimpleName();
+        Class nextParentClass= clazz.getSuperclass();
+        while(nextParentClass != null) {
+            chain = nextParentClass.getSimpleName() + delimiter + chain;
+            nextParentClass= nextParentClass.getSuperclass();
+        }
+
+
+
+        return chain;
     }
 }

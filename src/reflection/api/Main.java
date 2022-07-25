@@ -5,7 +5,7 @@ public class Main {
     {
         InvestigateReflect a= new InvestigateReflect();
         String str= new String("test");
-        a.load(new A());
+        a.load(new B());
         System.out.println(a.getTotalNumberOfMethods());
         System.out.println(a.getTotalNumberOfConstructors());
         System.out.println(a.getTotalNumberOfFields());
@@ -18,5 +18,7 @@ public class Main {
         // getNamesOfAllFieldsIncludingInheritanceChain()
         // invokeMethodThatReturnsInt()
         Object b = a.createInstance(3, "a", "b", "c");
+        // elevateMethodAndInvoke()
+        System.out.println(a.getInheritanceChain("-><"));
     }
 }
