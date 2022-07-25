@@ -18,7 +18,11 @@ public class Main {
         // getNamesOfAllFieldsIncludingInheritanceChain()
         System.out.println("now: "+a.invokeMethodThatReturnsInt("foo", 2 ,3));
         Object b = a.createInstance(3, "a", "b", "c");
-        // elevateMethodAndInvoke()
+        Class<?>[] classes= new Class<?>[2];
+        Integer x= 3;
+        classes[0]= x.getClass();
+        classes[1]= x.getClass();
+        System.out.println(a.elevateMethodAndInvoke("goo",classes, 44, 55));
         System.out.println(a.getInheritanceChain("-><"));
     }
 }

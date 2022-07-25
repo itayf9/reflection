@@ -1,5 +1,6 @@
 package reflection.api;
 
+import java.util.Arrays;
 import java.util.Set;
 import java.lang.reflect.Method;
 import java.lang.reflect.Constructor;
@@ -187,25 +188,22 @@ public class InvestigateReflect implements Investigator {
 
     @Override
     public Object elevateMethodAndInvoke(String name, Class<?>[] parametersTypes, Object... args) {
-        Method selectedMethod= null;
-
-        try {
-            selectedMethod= clazz.getDeclaredMethod(name, parametersTypes);
-        }catch (NoSuchMethodException e) {
-            return e;
-        }
-        catch (SecurityException e) {
-        }
 
         Object res= null;
-
         try {
-            res= selectedMethod.invoke(args);
-        }catch (IllegalAccessException e) {
-        }
-        catch (IllegalArgumentException e){
-        }
-        catch (InvocationTargetException e) {
+            Method[] methods= clazz.getDeclaredMethods();
+
+            for (Method method : methods) {
+                if (method.getName().equals(name) && Arrays.equals(method.getGenericParameterTypes(), parametersTypes)) {
+                    method.setAccessible(true);
+                    res= method.invoke(obj, args);
+                    break;
+                }
+            }
+        }catch ( SecurityException e) {
+        }catch ( IllegalAccessException e) {
+        }catch ( IllegalArgumentException e) {
+        }catch ( InvocationTargetException e) {
         }
 
         return res;
