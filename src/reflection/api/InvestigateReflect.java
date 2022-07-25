@@ -127,29 +127,39 @@ public class InvestigateReflect implements Investigator {
 
     @Override
     public Set<String> getNamesOfAllFieldsIncludingInheritanceChain() {
-
         return null;
     }
 
     @Override
     public int invokeMethodThatReturnsInt(String methodName, Object... args) {
-       Method[] methods= clazz.getDeclaredMethods();
-        Method methodThatReturnsInt= null;
-        int i = 0;
+        Class<?>[] types= null;
+        for (int i = 0; i < args.length; i++) {
+            types[i]= args[i].getClass();
+        }
 
-        while (i< methods.length)
-        {
-            if (methods[i].getReturnType().getName().equals("int"))
-            {
-                methodThatReturnsInt= methods[i];
-                break;
+        Method method= null;
+        int res=0;
+
+        try {
+            method= clazz.getDeclaredMethod(methodName, types); // finds the method by its name
+
+            if (method.getReturnType().getName().equals("int")) {
+                res= (int)method.invoke(args);
             }
-            i++;
+            else {
+                throw new NoSuchMethodException();
+            }
+
+        }catch ( NoSuchMethodException e ) {
+        }catch ( SecurityException e) {
+        }catch ( IllegalAccessException e) {
+        }catch ( IllegalArgumentException e) {
+        }catch ( InvocationTargetException e) {
         }
 
 
 
-        return 0;
+        return res;
     }
 
     @Override

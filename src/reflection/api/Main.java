@@ -9,7 +9,7 @@ public class Main {
         System.out.println(a.getTotalNumberOfMethods());
         System.out.println(a.getTotalNumberOfConstructors());
         System.out.println(a.getTotalNumberOfFields());
-        // getAllImplementedInterfaces()
+        System.out.println(a.getAllImplementedInterfaces());
         System.out.println(a.getCountOfConstantFields());
         System.out.println(a.getCountOfStaticMethods());
         System.out.println(a.isExtending());
