@@ -1,6 +1,7 @@
 package reflection.api;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.Set;
 import java.lang.reflect.Method;
 import java.lang.reflect.Constructor;
@@ -45,7 +46,7 @@ public class InvestigateReflect implements Investigator {
     @Override
     public Set<String> getAllImplementedInterfaces() {
         Class<?>[] allImplementedInterfaces= clazz.getInterfaces();
-        Set<String> interfacesNames= null;
+        Set<String> interfacesNames= new HashSet<>();
 
         for (Class<?> implementedInterface : allImplementedInterfaces) {
             interfacesNames.add(implementedInterface.getSimpleName());
