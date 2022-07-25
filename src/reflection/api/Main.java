@@ -16,7 +16,7 @@ public class Main {
         System.out.println(a.getParentClassSimpleName());
         System.out.println(a.isParentClassAbstract());
         // getNamesOfAllFieldsIncludingInheritanceChain()
-        // invokeMethodThatReturnsInt()
+        System.out.println("now: "+a.invokeMethodThatReturnsInt("foo", 2 ,3));
         Object b = a.createInstance(3, "a", "b", "c");
         // elevateMethodAndInvoke()
         System.out.println(a.getInheritanceChain("-><"));

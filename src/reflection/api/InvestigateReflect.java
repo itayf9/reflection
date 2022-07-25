@@ -10,12 +10,14 @@ import java.lang.reflect.InvocationTargetException;
 public class InvestigateReflect implements Investigator {
 
     private Class clazz;
+    private Object obj;
 
 
 
     @Override
     public void load(Object anInstanceOfSomething) {
         this.clazz= anInstanceOfSomething.getClass();
+        this.obj= anInstanceOfSomething;
     }
 
     @Override
@@ -132,22 +134,20 @@ public class InvestigateReflect implements Investigator {
 
     @Override
     public int invokeMethodThatReturnsInt(String methodName, Object... args) {
-        Class<?>[] types= null;
-        for (int i = 0; i < args.length; i++) {
-            types[i]= args[i].getClass();
-        }
 
-        Method method= null;
         int res=0;
 
         try {
-            method= clazz.getDeclaredMethod(methodName, types); // finds the method by its name
+            Method[] methods= clazz.getDeclaredMethods(); // finds the method by its name
 
-            if (method.getReturnType().getName().equals("int")) {
-                res= (int)method.invoke(args);
-            }
-            else {
-                throw new NoSuchMethodException();
+            for (Method method : methods) {
+                if (method.getGenericReturnType().getTypeName().equals("int")){
+                    res= (int)method.invoke(obj, args);
+                    break;
+                }
+                else {
+                    throw new NoSuchMethodException();
+                }
             }
 
         }catch ( NoSuchMethodException e ) {
