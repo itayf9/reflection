@@ -131,7 +131,24 @@ public class InvestigateReflect implements Investigator {
 
     @Override
     public Set<String> getNamesOfAllFieldsIncludingInheritanceChain() {
-        return null;
+
+        Set<String> fieldNames= new HashSet<>();
+        Class<?> currentClass = obj.getClass();
+
+        while (currentClass.getSuperclass()!= null){
+            Field[] fields= currentClass.getDeclaredFields();
+
+
+            for (Field field : fields){
+                fieldNames.add(field.getName());
+            }
+
+            currentClass= currentClass.getSuperclass();
+
+        }
+
+
+        return fieldNames;
     }
 
     @Override

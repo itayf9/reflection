@@ -15,7 +15,7 @@ public class Main {
         System.out.println(a.isExtending());
         System.out.println(a.getParentClassSimpleName());
         System.out.println(a.isParentClassAbstract());
-        // getNamesOfAllFieldsIncludingInheritanceChain()
+        System.out.println(a.getNamesOfAllFieldsIncludingInheritanceChain());
         System.out.println("now: "+a.invokeMethodThatReturnsInt("foo", 2 ,3));
         Object b = a.createInstance(3, "a", "b", "c");
         Class<?>[] classes= new Class<?>[2];
