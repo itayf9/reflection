@@ -11,10 +11,8 @@ import java.lang.reflect.InvocationTargetException;
 
 public class InvestigateReflect implements Investigator {
 
-    private Class clazz;
+    private Class<?> clazz;
     private Object obj;
-
-
 
     @Override
     public void load(Object anInstanceOfSomething) {
@@ -93,14 +91,14 @@ public class InvestigateReflect implements Investigator {
 
     @Override
     public boolean isExtending() {
-        Class extendedClass= clazz.getSuperclass();
+        Class<?> extendedClass= clazz.getSuperclass();
 
         return extendedClass != null && !extendedClass.getName().equals("java.lang.Object");
     }
 
     @Override
     public String getParentClassSimpleName() {
-        Class extendedClass= clazz.getSuperclass();
+        Class<?> extendedClass= clazz.getSuperclass();
         String parentSimpleName= null;
 
         if (extendedClass != null)
@@ -113,7 +111,7 @@ public class InvestigateReflect implements Investigator {
 
     @Override
     public boolean isParentClassAbstract() {
-        Class extendedClass= clazz.getSuperclass();
+        Class<?> extendedClass= clazz.getSuperclass();
         int modifier;
         boolean isParentAbstract = false;
 
@@ -144,9 +142,7 @@ public class InvestigateReflect implements Investigator {
             }
 
             currentClass= currentClass.getSuperclass();
-
         }
-
 
         return fieldNames;
     }
@@ -154,7 +150,7 @@ public class InvestigateReflect implements Investigator {
     @Override
     public int invokeMethodThatReturnsInt(String methodName, Object... args) {
 
-        int res=0;
+        int res = 0;
 
         try {
             Method[] methods= clazz.getDeclaredMethods(); // finds the method by its name
@@ -166,15 +162,9 @@ public class InvestigateReflect implements Investigator {
                 }
             }
             throw new NoSuchMethodException();
-
-        }catch ( NoSuchMethodException e ) {
-        }catch ( SecurityException e) {
-        }catch ( IllegalAccessException e) {
-        }catch ( IllegalArgumentException e) {
-        }catch ( InvocationTargetException e) {
+        }catch (NoSuchMethodException | SecurityException | IllegalAccessException | IllegalArgumentException |
+                InvocationTargetException e ) {
         }
-
-
 
         return res;
     }
@@ -190,13 +180,7 @@ public class InvestigateReflect implements Investigator {
                     break;
                 }
             }
-        }catch (InstantiationException e) {
-        }
-        catch (IllegalAccessException e) {
-        }
-        catch (IllegalArgumentException e) {
-        }
-        catch (InvocationTargetException e){
+        }catch (InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
         }
 
         return newInstance;
@@ -216,10 +200,7 @@ public class InvestigateReflect implements Investigator {
                     break;
                 }
             }
-        }catch ( SecurityException e) {
-        }catch ( IllegalAccessException e) {
-        }catch ( IllegalArgumentException e) {
-        }catch ( InvocationTargetException e) {
+        }catch (SecurityException | IllegalAccessException | InvocationTargetException | IllegalArgumentException e) {
         }
 
         return res;
@@ -228,7 +209,7 @@ public class InvestigateReflect implements Investigator {
     @Override
     public String getInheritanceChain(String delimiter) {
         String chain= clazz.getSimpleName();
-        Class nextParentClass= clazz.getSuperclass();
+        Class<?> nextParentClass= clazz.getSuperclass();
         while(nextParentClass != null) {
             chain = nextParentClass.getSimpleName() + delimiter + chain;
             nextParentClass= nextParentClass.getSuperclass();
